@@ -178,6 +178,10 @@ public class TesteSwinguera extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        
+    }
+
     /**
      * @param args the command line arguments
      */
