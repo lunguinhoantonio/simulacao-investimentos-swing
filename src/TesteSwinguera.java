@@ -178,6 +178,22 @@ public class TesteSwinguera extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        DefaultTableModel model = (DefaultTableModel) jTLista.getModel();
+        int selectedRowIndex = jTLista.getSelectedRow();
+        int opcaoEsc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja remover\n" + jTLista.getColumnName(0) + " " + jTLista.getValueAt(selectedRowIndex, 0));
+        switch (opcaoEsc) {
+            case 0:
+                int removedID = (int) jTLista.getValueAt(selectedRowIndex, 0);
+                model.removeRow(selectedRowIndex);
+                JOptionPane.showMessageDialog(null, "ID " + removedID + " removido!");
+                break;
+            case 1:
+            case 2:
+                break;
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
