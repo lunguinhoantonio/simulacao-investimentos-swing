@@ -8,6 +8,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TesteSwinguera extends javax.swing.JFrame {
     private TelaAdicionar telaAdicionar;
+    private EditorInvest editorInvest;
+    
+    
     
     /**
      * Creates new form TesteSwinguera
@@ -62,6 +65,12 @@ public class TesteSwinguera extends javax.swing.JFrame {
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_edit.png"))); // NOI18N
         btnEdit.setText("Editar");
+        
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            EditorInvestActionPerformed(evt);
+        }
+        }); 
 
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         btnRemove.setText("Remover");
@@ -180,7 +189,41 @@ public class TesteSwinguera extends javax.swing.JFrame {
             Toolkit.getDefaultToolkit().beep();
         }
     }                                        
+    private void EditorInvestActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        int selectedRowIndex = table.getSelectedRow();
 
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha para editar.");
+            return;
+        }
+
+        int quantColunas = table.getColumnCount();
+        Object[] dados = new Object[quantColunas];
+        for (int i = 0; i < quantColunas; i++) {
+            dados[i] = table.getValueAt(selectedRowIndex, i);
+        }
+
+        int opcaoEsc = JOptionPane.showConfirmDialog(null,
+            "Tem certeza que deseja Editar?\n" + 
+            "ID: " + dados[0] + ", Tipo Investimento: " + dados[1] + ", Investimento inicial (R$): " + dados[2] + 
+            ", Resultado (R$): " + dados[3] + ", Rendimento (%): " + dados[4] + ", Tempo: " + dados[5] + ", Taxa (%): " + dados[6],
+            "Confirmação de edição do ID " + dados[0],
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (opcaoEsc == JOptionPane.YES_OPTION) {
+            EditorInvest editorInvest = new EditorInvest(model, selectedRowIndex);
+
+            // Preenche os campos com os valores existentes
+            editorInvest.setValor(dados[2].toString());
+            String tempoStr = dados[5].toString().replaceAll("[^\\d]", "");
+            editorInvest.setTempo(Integer.parseInt(tempoStr));
+
+            editorInvest.setLocationRelativeTo(null);
+            editorInvest.setVisible(true);
+        }
+    }
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {                                          
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         int selectedRowIndex = table.getSelectedRow();
@@ -197,15 +240,6 @@ public class TesteSwinguera extends javax.swing.JFrame {
             model.removeRow(selectedRowIndex);
             JOptionPane.showMessageDialog(null, "ID " + dados[0] + " removido!");
         }
-//        switch (opcaoEsc) {
-//            case 0:
-//                model.removeRow(selectedRowIndex);
-//                JOptionPane.showMessageDialog(null, "ID " + dados[0] + " removido!");
-//                break;
-//            case 1:
-//            case 2:
-//                break;
-//        }
     }                                         
 
     /**
