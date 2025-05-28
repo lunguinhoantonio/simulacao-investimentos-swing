@@ -17,6 +17,9 @@ public class TesteSwinguera extends javax.swing.JFrame {
      */
     public TesteSwinguera() {
         initComponents();
+
+        DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+        table.setRowSorter(new TableRowSorter(modelo));
     }
 
     /**
