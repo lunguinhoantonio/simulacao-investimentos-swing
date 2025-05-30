@@ -7,14 +7,14 @@ public class EditorInvest extends javax.swing.JFrame {
     private DefaultTableModel model;
     private int rowIndex;
     
-    public EditorInvest(DefaultTableModel model, int rowIndex) {
-        initComponents();
-        this.model = model;
-        this.rowIndex = rowIndex;
-    }
-    
     public EditorInvest() {
         initComponents();
+    }
+    
+    public EditorInvest(DefaultTableModel model, int rowIndex) {
+        this();
+        this.model = model;
+        this.rowIndex = rowIndex;
     }
     
     public void setValor(String valor) {
