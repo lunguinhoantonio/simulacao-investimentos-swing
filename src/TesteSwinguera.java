@@ -15,9 +15,6 @@ public class TesteSwinguera extends javax.swing.JFrame {
     private EditorInvest editorInvest;
     Object[] opcoes = {"Sim", "Não"};
     
-    /**
-     * Creates new form TesteSwinguera
-     */
     public TesteSwinguera() {
         initComponents();
         
@@ -36,15 +33,14 @@ public class TesteSwinguera extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
-        jButton1 = new javax.swing.JButton();
+        btnTelaAdicionar = new javax.swing.JButton();
         EditorInvest = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
         btnExportTxt = new javax.swing.JButton();
-        jSpinner1 = new javax.swing.JSpinner();
+        spinBuscarID = new javax.swing.JSpinner();
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        jButton5 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -59,16 +55,16 @@ public class TesteSwinguera extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Simulação de investimentos");
+        setTitle("Simulador de investimentos");
         setMaximumSize(new java.awt.Dimension(3840, 2160));
         setMinimumSize(new java.awt.Dimension(904, 300));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
-        jButton1.setText("Adicionar");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnTelaAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
+        btnTelaAdicionar.setText("Adicionar");
+        btnTelaAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTelaAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnTelaAdicionarActionPerformed(evt);
             }
         });
 
@@ -99,8 +95,8 @@ public class TesteSwinguera extends javax.swing.JFrame {
             }
         });
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
-        jSpinner1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        spinBuscarID.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
+        spinBuscarID.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -130,9 +126,9 @@ public class TesteSwinguera extends javax.swing.JFrame {
             table.getColumnModel().getColumn(6).setPreferredWidth(10);
         }
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/magnifier.png"))); // NOI18N
-        jButton5.setText("Buscar");
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/magnifier.png"))); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel2.setText("Pesquisar por ID:");
 
@@ -143,34 +139,33 @@ public class TesteSwinguera extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(btnExportTxt))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(EditorInvest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnRemove, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(btnExportTxt))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnTelaAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(EditorInvest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnRemove, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(20, 20, 20)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(199, 199, 199)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(spinBuscarID, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton5)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE))
+                        .addComponent(btnBuscar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(95, 95, 95)
-                .addComponent(jButton1)
+                .addComponent(btnTelaAdicionar)
                 .addGap(18, 18, 18)
                 .addComponent(EditorInvest)
                 .addGap(18, 18, 18)
@@ -179,16 +174,11 @@ public class TesteSwinguera extends javax.swing.JFrame {
                 .addComponent(btnExportTxt)
                 .addGap(22, 22, 22))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton5)
-                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscar)
+                    .addComponent(spinBuscarID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
                 .addContainerGap())
@@ -198,8 +188,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+    private void btnTelaAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTelaAdicionarActionPerformed
         if (telaAdicionar == null || !telaAdicionar.isDisplayable()) {
             telaAdicionar = new TelaAdicionar(this, (DefaultTableModel) table.getModel());
             telaAdicionar.setVisible(true);
@@ -208,19 +197,15 @@ public class TesteSwinguera extends javax.swing.JFrame {
             telaAdicionar.requestFocus();
             Toolkit.getDefaultToolkit().beep();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnTelaAdicionarActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         int selectedRowIndex = table.getSelectedRow();
-        int quantColunas = table.getColumnCount();
-        Object[] dados = new Object[quantColunas];
-        for (int i = 0; i < quantColunas; i++) {
-            dados[i] = (Object) table.getValueAt(selectedRowIndex, i);
-        }
-        // table.getColumnName(0) + " " + table.getValueAt(selectedRowIndex, 0)
-        int opcaoEsc = JOptionPane.showOptionDialog(null, "Tem certeza que deseja remover\n\"" + 
-                "ID: " + dados[0] + ", Tipo Investimento: " + dados[1] + ", Investimento inicial (R$): " + dados[2] + ", Resultado (R$): " + dados[3] + ", Rendimento (%): " + dados[4] + ", Tempo: " + dados[5] + ", Taxa (%): " + dados[6] + "\"?", "Confirmação de remoção do ID " + dados[0], 
+        Object id = (Object) table.getValueAt(selectedRowIndex, 0);
+        int opcaoEsc = JOptionPane.showOptionDialog(null, 
+                "Tem certeza que deseja remover\n\"ID: " + id + "\"?", 
+                "Confirmação de remoção do ID " + id, 
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
@@ -230,7 +215,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
         
         if (opcaoEsc == JOptionPane.YES_OPTION) {
             model.removeRow(selectedRowIndex);
-            JOptionPane.showMessageDialog(null, "ID " + dados[0] + " removido!");
+            JOptionPane.showMessageDialog(null, "ID " + id + " removido!");
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
@@ -248,12 +233,12 @@ public class TesteSwinguera extends javax.swing.JFrame {
         for (int i = 0; i < quantColunas; i++) {
             dados[i] = table.getValueAt(selectedRowIndex, i);
         }
+        Object id = (Object) dados[0];
 
         int opcaoEsc = JOptionPane.showOptionDialog(null,
-            "Tem certeza que deseja editar?\n" + 
-            "ID: " + dados[0] + ", Tipo Investimento: " + dados[1] + ", Investimento inicial (R$): " + dados[2] + 
+            "Tem certeza que deseja editar?\nID: " + id + ", Tipo Investimento: " + dados[1] + ", Investimento inicial (R$): " + dados[2] + 
             ", Resultado (R$): " + dados[3] + ", Rendimento (%): " + dados[4] + ", Tempo: " + dados[5] + ", Taxa (%): " + dados[6],
-            "Confirmação de edição do ID " + dados[0],
+            "Confirmação de edição do ID " + id,
             JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE,
             null,
@@ -304,7 +289,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
             writer.flush();
             JOptionPane.showMessageDialog(this, "Exportação concluída! Arquivo salvo como 'registros.txt'.");
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao exportar: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro ao exportar: " + e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnExportTxtActionPerformed
 
@@ -345,16 +330,15 @@ public class TesteSwinguera extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton EditorInvest;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnExportTxt;
     private javax.swing.JButton btnRemove;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnTelaAdicionar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JSpinner spinBuscarID;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }
