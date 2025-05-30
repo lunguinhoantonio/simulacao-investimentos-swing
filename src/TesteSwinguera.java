@@ -65,6 +65,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
         jButton1.setText("Adicionar");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -73,6 +74,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
 
         EditorInvest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_edit.png"))); // NOI18N
         EditorInvest.setText("Editar");
+        EditorInvest.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         EditorInvest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditorInvestActionPerformed(evt);
@@ -81,6 +83,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
 
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         btnRemove.setText("Remover");
+        btnRemove.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRemoveActionPerformed(evt);
@@ -89,11 +92,14 @@ public class TesteSwinguera extends javax.swing.JFrame {
 
         btnExportTxt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_go.png"))); // NOI18N
         btnExportTxt.setText("Exportar para txt");
+        btnExportTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnExportTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExportTxtActionPerformed(evt);
             }
         });
+
+        jSpinner1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -125,6 +131,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/magnifier.png"))); // NOI18N
         jButton5.setText("Buscar");
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel2.setText("Pesquisar por ID:");
 
@@ -189,7 +196,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         if (telaAdicionar == null || !telaAdicionar.isDisplayable()) {

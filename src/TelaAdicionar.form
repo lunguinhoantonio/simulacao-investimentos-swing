@@ -120,6 +120,9 @@
           </StringArray>
         </Property>
         <Property name="selectedIndex" type="int" value="-1"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Hand Cursor"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectInvActionPerformed"/>
@@ -129,6 +132,11 @@
       </AuxValues>
     </Component>
     <Component class="javax.swing.JSpinner" name="spinnerTempo">
+      <Properties>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Hand Cursor"/>
+        </Property>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTempo">
       <Properties>
@@ -141,6 +149,9 @@
           <Image iconType="3" name="/images/table_add.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Adicionar"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Hand Cursor"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddInvActionPerformed"/>

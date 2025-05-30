@@ -51,16 +51,20 @@ public class TelaAdicionar extends javax.swing.JFrame {
 
         selectInv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Poupança", "CDB", "Tesouro Selic", "Ações" }));
         selectInv.setSelectedIndex(-1);
+        selectInv.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         selectInv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selectInvActionPerformed(evt);
             }
         });
 
+        spinnerTempo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
         lblTempo.setText("Tempo:");
 
         btnAddInv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_add.png"))); // NOI18N
         btnAddInv.setText("Adicionar");
+        btnAddInv.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddInv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddInvActionPerformed(evt);
