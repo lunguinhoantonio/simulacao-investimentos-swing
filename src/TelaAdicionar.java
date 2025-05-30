@@ -58,6 +58,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
             }
         });
 
+        spinnerTempo.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
         spinnerTempo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         lblTempo.setText("Tempo:");
@@ -139,7 +140,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
         if (selectInv.getSelectedIndex() == -1) JOptionPane.showMessageDialog(null, "Selecione um tipo de investimento!"); 
         else if (txtValor.getText().isBlank()) JOptionPane.showMessageDialog(null, "Digite o valor do investimento inicial!");
         else if (Double.parseDouble(textoTxtValue) <= 0) JOptionPane.showMessageDialog(null, "O valor de investimento não pode ser menor ou igual a 0!");
-        else if (tempoValue <= 0) JOptionPane.showMessageDialog(null, "O tempo não pode ser menor ou igual a 0!");
+        else if (tempoValue == 0) JOptionPane.showMessageDialog(null, "O tempo não pode ser igual a 0!");
         else {
             double valor = Double.parseDouble(textoTxtValue);
             String investimentoSelecionado = (String) selectInv.getSelectedItem();

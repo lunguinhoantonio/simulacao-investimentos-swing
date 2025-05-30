@@ -62,6 +62,7 @@ public class EditorInvest extends javax.swing.JFrame {
 
         lblTempo.setText("Tempo:");
 
+        spinnerTempo1.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
         spinnerTempo1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_edit.png"))); // NOI18N

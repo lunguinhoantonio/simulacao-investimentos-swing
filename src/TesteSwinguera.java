@@ -99,6 +99,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
             }
         });
 
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
         jSpinner1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
