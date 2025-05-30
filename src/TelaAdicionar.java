@@ -13,7 +13,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
     }
 
     public TelaAdicionar(JFrame parent, DefaultTableModel model) {
-        initComponents();
+        this();
         this.model = model;
     }
 
@@ -137,10 +137,10 @@ public class TelaAdicionar extends javax.swing.JFrame {
         Registro registros = new Registro();
         String textoTxtValue = txtValor.getText().replace(",", ".");
         int tempoValue = (int) spinnerTempo.getValue();
-        if (selectInv.getSelectedIndex() == -1) JOptionPane.showMessageDialog(null, "Selecione um tipo de investimento!"); 
-        else if (txtValor.getText().isBlank()) JOptionPane.showMessageDialog(null, "Digite o valor do investimento inicial!");
-        else if (Double.parseDouble(textoTxtValue) <= 0) JOptionPane.showMessageDialog(null, "O valor de investimento não pode ser menor ou igual a 0!");
-        else if (tempoValue == 0) JOptionPane.showMessageDialog(null, "O tempo não pode ser igual a 0!");
+        if (selectInv.getSelectedIndex() == -1) JOptionPane.showMessageDialog(null, "Selecione um tipo de investimento!", "Aviso!", JOptionPane.WARNING_MESSAGE); 
+        else if (txtValor.getText().isBlank()) JOptionPane.showMessageDialog(null, "Digite o valor do investimento inicial!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+        else if (Double.parseDouble(textoTxtValue) <= 0) JOptionPane.showMessageDialog(null, "O valor de investimento não pode ser menor ou igual a 0!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+        else if (tempoValue == 0) JOptionPane.showMessageDialog(null, "O tempo não pode ser igual a 0!", "Aviso!", JOptionPane.WARNING_MESSAGE);
         else {
             double valor = Double.parseDouble(textoTxtValue);
             String investimentoSelecionado = (String) selectInv.getSelectedItem();
