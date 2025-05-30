@@ -8,10 +8,10 @@ public class EditorInvest extends javax.swing.JFrame {
     private int rowIndex;
     
     public EditorInvest(DefaultTableModel model, int rowIndex) {
-    initComponents();
-    this.model = model;
-    this.rowIndex = rowIndex;
-}
+        initComponents();
+        this.model = model;
+        this.rowIndex = rowIndex;
+    }
     
     public EditorInvest() {
         initComponents();
@@ -51,6 +51,7 @@ public class EditorInvest extends javax.swing.JFrame {
         btnEdit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Editar");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel2.setText("Editar investimento");
@@ -82,8 +83,8 @@ public class EditorInvest extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtValor)
-                            .addComponent(spinnerTempo1)))
+                            .addComponent(spinnerTempo1)
+                            .addComponent(txtValor)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -113,70 +114,70 @@ public class EditorInvest extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         try {
-        String valorStr = getValor().replace(",", ".");
-        double valor = Double.parseDouble(valorStr);
-        int tempo = getTempo();
+            String valorStr = getValor().replace(",", ".");
+            double valor = Double.parseDouble(valorStr);
+            int tempo = getTempo();
 
-        if (model != null) {
-            String tipo = model.getValueAt(rowIndex, 1).toString();
+            if (model != null) {
+                String tipo = model.getValueAt(rowIndex, 1).toString();
 
-            double montante = 0;
-            double rendimento = 0;
-            double rendimentoPorcentagem = 0;
+                double montante = 0;
+                double rendimento = 0;
+                double rendimentoPorcentagem = 0;
 
-            switch (tipo) {
-                case "Poupança" -> {
-                    Poupanca p = new Poupanca(valor, tempo);
-                    p.calcValorFinal();
-                    montante = p.getMontante();
-                    rendimento = ((montante - valor)/valor)*100;
-                    rendimentoPorcentagem = p.getPorcRendimento();
+                switch (tipo) {
+                    case "Poupança" -> {
+                        Poupanca p = new Poupanca(valor, tempo);
+                        p.calcValorFinal();
+                        montante = p.getMontante();
+                        rendimento = ((montante - valor)/valor)*100;
+                        rendimentoPorcentagem = p.getPorcRendimento();
+                    }
+                    case "CDB" -> {
+                        CDB c = new CDB(valor, tempo);
+                        c.calcValorFinal();
+                        montante = c.getMontante();
+                        rendimento = ((montante - valor)/valor)*100;
+                        rendimentoPorcentagem = c.getPorcRendimento();
+                    }
+                    case "Tesouro Selic" -> {
+                        TesouroSelic t = new TesouroSelic(valor, tempo);
+                        t.calcValorFinal();
+                        montante = t.getMontante();
+                        rendimento = ((montante - valor)/valor)*100;
+                        rendimentoPorcentagem = t.getPorcRendimento();
+                    }
+                    case "Ações" -> {
+                        Acao a = new Acao(valor, tempo);
+                        a.calcValorFinal();
+                        montante = a.getMontante();
+                        rendimento = ((montante - valor)/valor)*100;
+                        rendimentoPorcentagem = a.getPorcRendimento();
+                    }
+                    default -> {
+                        JOptionPane.showMessageDialog(this, "Tipo de investimento desconhecido.", "Aviso!", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
                 }
-                case "CDB" -> {
-                    CDB c = new CDB(valor, tempo);
-                    c.calcValorFinal();
-                    montante = c.getMontante();
-                    rendimento = ((montante - valor)/valor)*100;
-                    rendimentoPorcentagem = c.getPorcRendimento();
-                }
-                case "Tesouro Selic" -> {
-                    TesouroSelic t = new TesouroSelic(valor, tempo);
-                    t.calcValorFinal();
-                    montante = t.getMontante();
-                    rendimento = ((montante - valor)/valor)*100;
-                    rendimentoPorcentagem = t.getPorcRendimento();
-                }
-                case "Ações" -> {
-                    Acao a = new Acao(valor, tempo);
-                    a.calcValorFinal();
-                    montante = a.getMontante();
-                    rendimento = ((montante - valor)/valor)*100;
-                    rendimentoPorcentagem = a.getPorcRendimento();
-                }
-                default -> {
-                    JOptionPane.showMessageDialog(this, "Tipo de investimento desconhecido.");
-                    return;
-                }
+
+                boolean isMensal = tipo.equals("Poupança") || tipo.equals("Ações");
+                model.setValueAt(String.format("%.2f", valor), rowIndex, 2); // Novo valor inicial
+                model.setValueAt(String.format("%.2f", montante), rowIndex, 3); // Valor final
+                model.setValueAt(String.format("%.2f", rendimento), rowIndex, 4); // Rendimento em reais
+                model.setValueAt(tempo + (isMensal ? " meses" : " anos"), rowIndex, 5); // Tempo com unidade
+
+                JOptionPane.showMessageDialog(this, "Valores atualizados com sucesso!");
+                dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro: modelo de dados não definido.", "Aviso!", JOptionPane.WARNING_MESSAGE);
             }
 
-            boolean isMensal = tipo.equals("Poupança") || tipo.equals("Ações");
-            model.setValueAt(String.format("%.2f", valor), rowIndex, 2); // Novo valor inicial
-            model.setValueAt(String.format("%.2f", montante), rowIndex, 3); // Valor final
-            model.setValueAt(String.format("%.2f", rendimento), rowIndex, 4); // Rendimento em reais
-            model.setValueAt(tempo + (isMensal ? " meses" : " anos"), rowIndex, 5); // Tempo com unidade
-
-            JOptionPane.showMessageDialog(this, "Valores atualizados com sucesso!");
-            dispose();
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Erro: modelo de dados não definido.");
-        }
-
     } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Digite um valor numérico válido.");
+        JOptionPane.showMessageDialog(this, "Digite um valor numérico válido.", "Aviso!", JOptionPane.WARNING_MESSAGE);
     }
     }//GEN-LAST:event_btnEditActionPerformed
 
@@ -184,6 +185,7 @@ public class EditorInvest extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
