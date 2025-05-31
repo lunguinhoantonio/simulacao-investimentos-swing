@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import tiposInvestimento.*;
 import register.Registro;
 import javax.swing.JOptionPane;
@@ -34,7 +35,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
         lblTempo = new javax.swing.JLabel();
         btnAddInv = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        txtValor = new javax.swing.JTextField();
+        txtValor = new javax.swing.JFormattedTextField();
 
         jLabel1.setText("jLabel1");
 
@@ -74,6 +75,8 @@ public class TelaAdicionar extends javax.swing.JFrame {
 
         jLabel4.setText("Valor Inicial (R$):");
 
+        txtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -98,8 +101,8 @@ public class TelaAdicionar extends javax.swing.JFrame {
                             .addComponent(lblTempo))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtValor, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
-                            .addComponent(spinnerTempo))))
+                            .addComponent(spinnerTempo, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                            .addComponent(txtValor))))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -135,7 +138,8 @@ public class TelaAdicionar extends javax.swing.JFrame {
 
     private void btnAddInvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddInvActionPerformed
         Registro registros = new Registro();
-        String textoTxtValue = txtValor.getText().replace(",", ".");
+        DecimalFormat df = new DecimalFormat("#,###.00");
+        String textoTxtValue = txtValor.getText().replace(".", "").replace(",", ".");
         int tempoValue = (int) spinnerTempo.getValue();
         if (selectInv.getSelectedIndex() == -1) JOptionPane.showMessageDialog(null, "Selecione um tipo de investimento!", "Aviso!", JOptionPane.WARNING_MESSAGE); 
         else if (txtValor.getText().isBlank()) JOptionPane.showMessageDialog(null, "Digite o valor do investimento inicial!", "Aviso!", JOptionPane.WARNING_MESSAGE);
@@ -144,38 +148,53 @@ public class TelaAdicionar extends javax.swing.JFrame {
         else {
             double valor = Double.parseDouble(textoTxtValue);
             String investimentoSelecionado = (String) selectInv.getSelectedItem();
+            String montanteFormatado, rendimentoFormatado;
             switch (investimentoSelecionado) {
                 case "Poupança":
                     Stack<Poupanca> pilhaPoupanca = new Stack<>();
                     pilhaPoupanca.push(new Poupanca(valor, tempoValue));
                     pilhaPoupanca.peek().calcValorFinal();
-                    JOptionPane.showMessageDialog(null, "Resultado de " + pilhaPoupanca.peek().getTempoInvestido() + pilhaPoupanca.peek().getTextoTempoInvestido() + ": R$" + String.format("%.2f", pilhaPoupanca.peek().getMontante()) + "\n" + "Rendeu: " + String.format("%.2f", pilhaPoupanca.peek().getPorcRendimento()) + "%");
+                    montanteFormatado = df.format(pilhaPoupanca.peek().getMontante());
+                    rendimentoFormatado = df.format(pilhaPoupanca.peek().getPorcRendimento());
+                    JOptionPane.showMessageDialog(null, "Resultado de " + pilhaPoupanca.peek().getTempoInvestido() + pilhaPoupanca.peek().getTextoTempoInvestido() + ": R$" + montanteFormatado + "\n" + "Rendeu: " + rendimentoFormatado + "%");
                     registros.add(pilhaPoupanca.pop());
                     break;
                 case "CDB":
                     Stack<CDB> pilhaCDB = new Stack<>();
                     pilhaCDB.push(new CDB(valor, tempoValue));
                     pilhaCDB.peek().calcValorFinal();
-                    JOptionPane.showMessageDialog(null, "Resultado de " + pilhaCDB.peek().getTempoInvestido() + pilhaCDB.peek().getTextoTempoInvestido() + ": R$" + String.format("%.2f", pilhaCDB.peek().getMontante()) + "\n" + "Rendeu: " + String.format("%.2f", pilhaCDB.peek().getPorcRendimento()) + "%");
+                    montanteFormatado = df.format(pilhaCDB.peek().getMontante());
+                    rendimentoFormatado = df.format(pilhaCDB.peek().getPorcRendimento());
+                    JOptionPane.showMessageDialog(null, "Resultado de " + pilhaCDB.peek().getTempoInvestido() + pilhaCDB.peek().getTextoTempoInvestido() + ": R$" + montanteFormatado + "\n" + "Rendeu: " + rendimentoFormatado + "%");
                     registros.add(pilhaCDB.pop());
                     break;
                 case "Tesouro Selic":
                     Stack<TesouroSelic> pilhaTSelic = new Stack<>();
                     pilhaTSelic.push(new TesouroSelic(valor, tempoValue));
                     pilhaTSelic.peek().calcValorFinal();
-                    JOptionPane.showMessageDialog(null, "Resultado de " + pilhaTSelic.peek().getTempoInvestido() + pilhaTSelic.peek().getTextoTempoInvestido() + ": R$" + String.format("%.2f", pilhaTSelic.peek().getMontante()) + "\n" + "Rendeu: " + String.format("%.2f", pilhaTSelic.peek().getPorcRendimento()) + "%");
+                    montanteFormatado = df.format(pilhaTSelic.peek().getMontante());
+                    rendimentoFormatado = df.format(pilhaTSelic.peek().getPorcRendimento());
+                    JOptionPane.showMessageDialog(null, "Resultado de " + pilhaTSelic.peek().getTempoInvestido() + pilhaTSelic.peek().getTextoTempoInvestido() + ": R$" + montanteFormatado + "\n" + "Rendeu: " + rendimentoFormatado + "%");
                     registros.add(pilhaTSelic.pop());
                     break;
                 case "Ações":
                     Stack<Acao> pilhaAcoes = new Stack<>();
                     pilhaAcoes.push(new Acao(valor, tempoValue));
                     pilhaAcoes.peek().calcValorFinal();
-                    JOptionPane.showMessageDialog(null, "Resultado de " + pilhaAcoes.peek().getTempoInvestido() + pilhaAcoes.peek().getTextoTempoInvestido() + ": R$" + String.format("%.2f", pilhaAcoes.peek().getMontante()) + "\n" + "Rendeu: " + String.format("%.2f", pilhaAcoes.peek().getPorcRendimento()) + "%");
+                    montanteFormatado = df.format(pilhaAcoes.peek().getMontante());
+                    rendimentoFormatado = df.format(pilhaAcoes.peek().getPorcRendimento());
+                    JOptionPane.showMessageDialog(null, "Resultado de " + pilhaAcoes.peek().getTempoInvestido() + pilhaAcoes.peek().getTextoTempoInvestido() + ": R$" + montanteFormatado + "\n" + "Rendeu: " + rendimentoFormatado + "%");
                     registros.add(pilhaAcoes.pop());
                     break;
             }
                 TipoInvestimento dadoNovo = registros.getRegistros().getLast();
-                Object[] dados1 = {dadoNovo.getId(), dadoNovo.getNomeInvestimento(), String.format("%.2f", dadoNovo.getCapital()), String.format("%.2f", dadoNovo.getMontante()), String.format("%.2f", dadoNovo.getPorcRendimento()), dadoNovo.getTempoInvestido() + dadoNovo.getTextoTempoInvestido(), dadoNovo.getTaxa() != 0 ? String.format("%.2f", dadoNovo.getTaxa() * 100) : "Inexistente"};
+                
+                double[] numeros = {dadoNovo.getCapital(), dadoNovo.getMontante(), dadoNovo.getPorcRendimento()};
+                String[] formatados = new String[3];
+                for (int i = 0; i < formatados.length; i++) {
+                    formatados[i] = df.format(numeros[i]);
+                }
+                Object[] dados1 = {dadoNovo.getId(), dadoNovo.getNomeInvestimento(), formatados[0], formatados[1], formatados[2], dadoNovo.getTempoInvestido() + dadoNovo.getTextoTempoInvestido(), dadoNovo.getTaxa() != 0 ? String.format("%.2f", dadoNovo.getTaxa() * 100) : "Inexistente"};
                 
                 model.addRow(dados1);
         }
@@ -225,6 +244,6 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private javax.swing.JLabel lblTempo;
     private javax.swing.JComboBox<String> selectInv;
     private javax.swing.JSpinner spinnerTempo;
-    private javax.swing.JTextField txtValor;
+    private javax.swing.JFormattedTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }

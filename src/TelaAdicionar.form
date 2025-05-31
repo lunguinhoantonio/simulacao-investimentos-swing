@@ -57,8 +57,8 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtValor" pref="79" max="32767" attributes="0"/>
-                          <Component id="spinnerTempo" max="32767" attributes="0"/>
+                          <Component id="spinnerTempo" pref="79" max="32767" attributes="0"/>
+                          <Component id="txtValor" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -165,7 +165,12 @@
         <Property name="text" type="java.lang.String" value="Valor Inicial (R$):"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtValor">
+    <Component class="javax.swing.JFormattedTextField" name="txtValor">
+      <Properties>
+        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+          <Format format="#,###.00" subtype="-1" type="0"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
