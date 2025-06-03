@@ -37,6 +37,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
         popAdicionar = new javax.swing.JMenuItem();
         popEditar = new javax.swing.JMenuItem();
         popRemover = new javax.swing.JMenuItem();
+        popExportar = new javax.swing.JMenuItem();
         popCancelar = new javax.swing.JMenuItem();
         jPanel2 = new javax.swing.JPanel();
         btnExportTxt = new javax.swing.JButton();
@@ -83,6 +84,14 @@ public class TesteSwinguera extends javax.swing.JFrame {
             }
         });
         jPopupMenu1.add(popRemover);
+
+        popExportar.setText("Exportar");
+        popExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popExportarActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(popExportar);
 
         popCancelar.setText("Cancelar");
         jPopupMenu1.add(popCancelar);
@@ -250,7 +259,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
-    private void btnTelaAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTelaAdicionarActionPerformed
+    private void add() {
         if (telaAdicionar == null || !telaAdicionar.isDisplayable()) {
             telaAdicionar = new TelaAdicionar(this, (DefaultTableModel) table.getModel());
             telaAdicionar.setVisible(true);
@@ -259,33 +268,9 @@ public class TesteSwinguera extends javax.swing.JFrame {
             telaAdicionar.requestFocus();
             Toolkit.getDefaultToolkit().beep();
         }
-    }//GEN-LAST:event_btnTelaAdicionarActionPerformed
-
-    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        int selectedRowIndex = table.getSelectedRow();
-        if (selectedRowIndex < 0) {
-            JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha para remover.", "Aviso!", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        Object id = (Object) table.getValueAt(selectedRowIndex, 0);
-        int opcaoEsc = JOptionPane.showOptionDialog(null, 
-                "Tem certeza que deseja remover\n\"ID: " + id + "\"?", 
-                "Confirmação de remoção do ID " + id, 
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                opcoes,
-                opcoes[0]
-        );
-        
-        if (opcaoEsc == JOptionPane.YES_OPTION) {
-            model.removeRow(selectedRowIndex);
-            JOptionPane.showMessageDialog(null, "ID " + id + " removido!");
-        }
-    }//GEN-LAST:event_btnRemoveActionPerformed
-
-    private void EditorInvestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditorInvestActionPerformed
+    }
+    
+    private void edit() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         int selectedRowIndex = table.getSelectedRow();
 
@@ -323,109 +308,15 @@ public class TesteSwinguera extends javax.swing.JFrame {
             editorInvest.setLocationRelativeTo(null);
             editorInvest.setVisible(true);
         }
-    }//GEN-LAST:event_EditorInvestActionPerformed
-
-    private void btnExportTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportTxtActionPerformed
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-
-        if (model.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Nenhuma simulação para exportar.", "Aviso!", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("registros.txt"))) {
-            writer.write("ID | Tipo Investimento | Investimento Inicial (R$) | Resultado (R$) | Rendimento (%) | Tempo | Taxa (%)");
-            writer.newLine();
-            writer.write("-------------------------------------------------------------------------------------------------------");
-            writer.newLine();
-
-            // Dados da tabela
-            for (int i = 0; i < model.getRowCount(); i++) {
-                StringBuilder linha = new StringBuilder();
-                for (int j = 0; j < model.getColumnCount(); j++) {
-                    linha.append(model.getValueAt(i, j));
-                    if (j < model.getColumnCount() - 1) {
-                        linha.append(" | ");
-                    }
-                }
-                writer.write(linha.toString());
-                writer.newLine();
-            }
-
-            writer.flush();
-            JOptionPane.showMessageDialog(this, "Exportação concluída! Arquivo salvo como 'registros.txt'.");
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao exportar: " + e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnExportTxtActionPerformed
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        int valor = (int) spinBuscarID.getValue();
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void spinBuscarIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spinBuscarIDKeyReleased
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        TableRowSorter<DefaultTableModel> obj = new TableRowSorter<>(model);
-        table.setRowSorter(obj);
-        obj.setRowFilter(RowFilter.regexFilter(spinBuscarID.getValue().toString()));
-        
-        
-    }//GEN-LAST:event_spinBuscarIDKeyReleased
-
-    private void popAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popAdicionarActionPerformed
-        if (telaAdicionar == null || !telaAdicionar.isDisplayable()) {
-            telaAdicionar = new TelaAdicionar(this, (DefaultTableModel) table.getModel());
-            telaAdicionar.setVisible(true);
-        } else {
-            telaAdicionar.toFront();
-            telaAdicionar.requestFocus();
-            Toolkit.getDefaultToolkit().beep();
-        }
-    }//GEN-LAST:event_popAdicionarActionPerformed
-
-    private void popEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popEditarActionPerformed
+    }
+    
+    private void remove() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         int selectedRowIndex = table.getSelectedRow();
-
         if (selectedRowIndex < 0) {
-            JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha para editar.");
+            JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha para remover.", "Aviso!", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
-        int quantColunas = table.getColumnCount();
-        Object[] dados = new Object[quantColunas];
-        for (int i = 0; i < quantColunas; i++) {
-            dados[i] = table.getValueAt(selectedRowIndex, i);
-        }
-        Object id = (Object) dados[0];
-
-        int opcaoEsc = JOptionPane.showOptionDialog(null,
-            "Tem certeza que deseja editar?\nID: " + id + ", Tipo Investimento: " + dados[1] + ", Investimento inicial (R$): " + dados[2] + 
-            ", Resultado (R$): " + dados[3] + ", Rendimento (%): " + dados[4] + ", Tempo: " + dados[5] + ", Taxa (%): " + dados[6],
-            "Confirmação de edição do ID " + id,
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE,
-            null,
-            opcoes,
-            opcoes[0]
-        );
-
-        if (opcaoEsc == JOptionPane.YES_OPTION) {
-            editorInvest = new EditorInvest(model, selectedRowIndex);
-
-            // Preenche os campos com os valores existentes
-            editorInvest.setValor(dados[2].toString());
-            String tempoStr = dados[5].toString().replaceAll("[^\\d]", "");
-            editorInvest.setTempo(Integer.parseInt(tempoStr));
-
-            editorInvest.setLocationRelativeTo(null);
-            editorInvest.setVisible(true);
-        }
-    }//GEN-LAST:event_popEditarActionPerformed
-
-    private void popRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popRemoverActionPerformed
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        int selectedRowIndex = table.getSelectedRow();
         Object id = (Object) table.getValueAt(selectedRowIndex, 0);
         int opcaoEsc = JOptionPane.showOptionDialog(null, 
                 "Tem certeza que deseja remover\n\"ID: " + id + "\"?", 
@@ -441,7 +332,85 @@ public class TesteSwinguera extends javax.swing.JFrame {
             model.removeRow(selectedRowIndex);
             JOptionPane.showMessageDialog(null, "ID " + id + " removido!");
         }
+    }
+    
+    private void export() {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+        if (model.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Nenhuma simulação para exportar.");
+            return;
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("registros.txt"))) {
+            // Cabeçalho com larguras fixas
+            writer.write(String.format("%-4s| %-18s| %-25s| %-15s| %-15s| %-10s| %-10s",
+                    "ID", "Tipo Investimento", "Investimento Inicial (R$)", "Resultado (R$)",
+                    "Rendimento (%)", "Tempo", "Taxa (%)"));
+            writer.newLine();
+
+            writer.write("------------------------------------------------------------------------------------------------------");
+            writer.newLine();
+
+            // Dados da tabela com as mesmas larguras do cabeçalho
+            for (int i = 0; i < model.getRowCount(); i++) {
+                String linha = String.format("%-4s| %-18s| %-25s| %-15s| %-15s| %-10s| %-10s",
+                        model.getValueAt(i, 0), model.getValueAt(i, 1), model.getValueAt(i, 2),
+                        model.getValueAt(i, 3), model.getValueAt(i, 4), model.getValueAt(i, 5),
+                        model.getValueAt(i, 6));
+                writer.write(linha);
+                writer.newLine();
+            }
+
+            writer.flush();
+            JOptionPane.showMessageDialog(this, "Exportação concluída! Arquivo salvo como 'registros.txt'.");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao exportar: " + e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void btnTelaAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTelaAdicionarActionPerformed
+        add();
+    }//GEN-LAST:event_btnTelaAdicionarActionPerformed
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+        remove();
+    }//GEN-LAST:event_btnRemoveActionPerformed
+
+    private void EditorInvestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditorInvestActionPerformed
+        edit();
+    }//GEN-LAST:event_EditorInvestActionPerformed
+
+    private void btnExportTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportTxtActionPerformed
+        export();
+    }//GEN-LAST:event_btnExportTxtActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        //int valor = (int) spinBuscarID.getValue();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void spinBuscarIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spinBuscarIDKeyReleased
+        /*DefaultTableModel model = (DefaultTableModel) table.getModel();
+        TableRowSorter<DefaultTableModel> obj = new TableRowSorter<>(model);
+        table.setRowSorter(obj);
+        obj.setRowFilter(RowFilter.regexFilter(spinBuscarID.getValue().toString()));*/
+    }//GEN-LAST:event_spinBuscarIDKeyReleased
+
+    private void popAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popAdicionarActionPerformed
+        add();
+    }//GEN-LAST:event_popAdicionarActionPerformed
+
+    private void popEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popEditarActionPerformed
+        edit();
+    }//GEN-LAST:event_popEditarActionPerformed
+
+    private void popRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popRemoverActionPerformed
+        remove();
     }//GEN-LAST:event_popRemoverActionPerformed
+
+    private void popExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popExportarActionPerformed
+        export();
+    }//GEN-LAST:event_popExportarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -492,6 +461,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
     private javax.swing.JMenuItem popAdicionar;
     private javax.swing.JMenuItem popCancelar;
     private javax.swing.JMenuItem popEditar;
+    private javax.swing.JMenuItem popExportar;
     private javax.swing.JMenuItem popRemover;
     private javax.swing.JSpinner spinBuscarID;
     private javax.swing.JTable table;
