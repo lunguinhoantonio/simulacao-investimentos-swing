@@ -111,10 +111,8 @@ public class TesteSwinguera extends javax.swing.JFrame {
         btnExportTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExportTxtActionPerformed(evt);
-               
-}
             }
-        
+        });
 
         btnTelaAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
         btnTelaAdicionar.setText("Adicionar");
@@ -388,40 +386,40 @@ public class TesteSwinguera extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExportTxtActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        //int valor = (int) spinBuscarID.getValue();
-
-        private void buscarInvestimentoPorId(String idBuscado) {
-    // Se o campo estiver vazio, mostra uma mensagem e para a função
-    if (idBuscado == null || idBuscado.equals("")) {
-        JOptionPane.showMessageDialog(null, "Digite um ID para buscar.");
-        return;
-    }
-
-    // Percorre todas as linhas da tabela
-    for (int i = 0; i < model.getRowCount(); i++) {
-        // Pega o valor da coluna 0 da linha (onde está o ID)
-        String idTabela = model.getValueAt(i, 0).toString();
-
-        // Compara o ID da tabela com o ID digitado
-        if (idTabela.equals(idBuscado)) {
-            // Monta a mensagem com as informações encontradas
-            String msg = "ID: " + model.getValueAt(i, 0) + "\n";
-            msg += "Tipo: " + model.getValueAt(i, 1) + "\n";
-            msg += "Valor Inicial: R$ " + model.getValueAt(i, 2) + "\n";
-            msg += "Montante: R$ " + model.getValueAt(i, 3) + "\n";
-            msg += "Rendimento: " + model.getValueAt(i, 4) + "%\n";
-            msg += "Tempo: " + model.getValueAt(i, 5) + "\n";
-            msg += "Taxa: " + model.getValueAt(i, 6);
-
-            // Mostra a mensagem
-            JOptionPane.showMessageDialog(null, msg);
-            return; // Sai da função depois que encontrou
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        int valor = (int) spinBuscarID.getValue();
+        
+        // Se o campo estiver vazio, mostra uma mensagem e para a função
+        if (valor == 0) {
+            JOptionPane.showMessageDialog(null, "Digite um ID para buscar.", "Aviso!", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-    }
 
-    // Se não achou nenhum ID igual
-    JOptionPane.showMessageDialog(null, "Investimento com ID " + idBuscado + " não encontrado.");
-}
+        // Percorre todas as linhas da tabela
+        for (int i = 0; i < model.getRowCount(); i++) {
+            // Pega o valor da coluna 0 da linha (onde está o ID)
+            int idTabela = (int) model.getValueAt(i, 0);
+
+            // Compara o ID da tabela com o ID digitado
+            if (valor == idTabela) {
+                // Monta a mensagem com as informações encontradas
+                String msg = "ID: " + model.getValueAt(i, 0) + "\n";
+                msg += "Tipo: " + model.getValueAt(i, 1) + "\n";
+                msg += "Valor Inicial: R$ " + model.getValueAt(i, 2) + "\n";
+                msg += "Montante: R$ " + model.getValueAt(i, 3) + "\n";
+                msg += "Rendimento: " + model.getValueAt(i, 4) + "%\n";
+                msg += "Tempo: " + model.getValueAt(i, 5) + "\n";
+                msg += "Taxa: " + model.getValueAt(i, 6) + "%";
+
+                // Mostra a mensagem
+                JOptionPane.showMessageDialog(null, msg);
+                return; // Sai da função depois que encontrou
+            }
+        }
+
+        // Se não achou nenhum ID igual
+        JOptionPane.showMessageDialog(null, "Investimento com ID " + valor + " não encontrado.", "Aviso!", JOptionPane.WARNING_MESSAGE);
+    
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void spinBuscarIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spinBuscarIDKeyReleased
