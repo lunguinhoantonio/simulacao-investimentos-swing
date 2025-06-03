@@ -98,9 +98,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Simulador de investimentos");
-        setMaximumSize(new java.awt.Dimension(3840, 2160));
         setMinimumSize(new java.awt.Dimension(925, 300));
-        setPreferredSize(new java.awt.Dimension(925, 500));
 
         jPanel2.setComponentPopupMenu(jPopupMenu1);
         jPanel2.setMaximumSize(new java.awt.Dimension(3840, 2160));
@@ -184,11 +182,6 @@ public class TesteSwinguera extends javax.swing.JFrame {
 
         spinBuscarID.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
         spinBuscarID.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        spinBuscarID.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                spinBuscarIDKeyReleased(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -244,7 +237,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -336,37 +329,51 @@ public class TesteSwinguera extends javax.swing.JFrame {
     
     private void export() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-
         if (model.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Nenhuma simulação para exportar.");
+            JOptionPane.showMessageDialog(null, "Nenhuma simulação para exportar.", "Aviso!", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("registros.txt"))) {
-            // Cabeçalho com larguras fixas
-            writer.write(String.format("%-4s| %-18s| %-25s| %-15s| %-15s| %-10s| %-10s",
-                    "ID", "Tipo Investimento", "Investimento Inicial (R$)", "Resultado (R$)",
-                    "Rendimento (%)", "Tempo", "Taxa (%)"));
-            writer.newLine();
-
-            writer.write("------------------------------------------------------------------------------------------------------");
-            writer.newLine();
-
-            // Dados da tabela com as mesmas larguras do cabeçalho
-            for (int i = 0; i < model.getRowCount(); i++) {
-                String linha = String.format("%-4s| %-18s| %-25s| %-15s| %-15s| %-10s| %-10s",
-                        model.getValueAt(i, 0), model.getValueAt(i, 1), model.getValueAt(i, 2),
-                        model.getValueAt(i, 3), model.getValueAt(i, 4), model.getValueAt(i, 5),
-                        model.getValueAt(i, 6));
-                writer.write(linha);
+        
+        int opc = JOptionPane.showOptionDialog(null, "Tem certeza que deseja exportar a tabela para arquivo txt?", "Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opcoes, opcoes[0]);
+        if (opc == JOptionPane.YES_OPTION) {
+            
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("registros.txt"))) {
+                // Cabeçalho com larguras fixas
+                writer.write(String.format("%-4s| %-18s| %-25s| %-15s| %-15s| %-10s| %-10s",
+                        "ID", "Tipo Investimento", "Investimento Inicial (R$)", "Resultado (R$)",
+                        "Rendimento (%)", "Tempo", "Taxa (%)"));
                 writer.newLine();
-            }
 
-            writer.flush();
-            JOptionPane.showMessageDialog(this, "Exportação concluída! Arquivo salvo como 'registros.txt'.");
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao exportar: " + e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
+                writer.write("------------------------------------------------------------------------------------------------------");
+                writer.newLine();
+
+                // Dados da tabela com as mesmas larguras do cabeçalho
+                for (int i = 0; i < model.getRowCount(); i++) {
+                    String linha = String.format("%-4s| %-18s| %-25s| %-15s| %-15s| %-10s| %-10s",
+                            model.getValueAt(i, 0), model.getValueAt(i, 1), model.getValueAt(i, 2),
+                            model.getValueAt(i, 3), model.getValueAt(i, 4), model.getValueAt(i, 5),
+                            model.getValueAt(i, 6));
+                    writer.write(linha);
+                    writer.newLine();
+                }
+
+                writer.flush();
+                JOptionPane.showMessageDialog(this, "Exportação concluída! Arquivo salvo como 'registros.txt'.");
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Erro ao exportar: " + e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
+            }
         }
+    }
+    
+    private int descobrirIndexID(int valor) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        int index = 0;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            int idTabela = (int) model.getValueAt(i, 0);
+            if (valor == idTabela) return index;
+            index++;
+        }
+        return -1;
     }
     
     private void btnTelaAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTelaAdicionarActionPerformed
@@ -402,18 +409,31 @@ public class TesteSwinguera extends javax.swing.JFrame {
 
             // Compara o ID da tabela com o ID digitado
             if (valor == idTabela) {
+                int id = (int) model.getValueAt(i, 0);
+                int index = descobrirIndexID(valor);
+                table.setRowSelectionInterval(index, index);
+                table.scrollRectToVisible(table.getCellRect(index, index, true));
                 // Monta a mensagem com as informações encontradas
-                String msg = "ID: " + model.getValueAt(i, 0) + "\n";
+                String msg = "ID: " + id + "\n";
                 msg += "Tipo: " + model.getValueAt(i, 1) + "\n";
                 msg += "Valor Inicial: R$ " + model.getValueAt(i, 2) + "\n";
                 msg += "Montante: R$ " + model.getValueAt(i, 3) + "\n";
                 msg += "Rendimento: " + model.getValueAt(i, 4) + "%\n";
                 msg += "Tempo: " + model.getValueAt(i, 5) + "\n";
+                System.out.println(model.getValueAt(i, 6));
                 msg += "Taxa: " + model.getValueAt(i, 6) + "%";
-
+                Object[] opcs = {"Editar", "Remover", "Cancelar"};
                 // Mostra a mensagem
-                JOptionPane.showMessageDialog(null, msg);
-                return; // Sai da função depois que encontrou
+                int opc = JOptionPane.showOptionDialog(null, msg, "Busca do ID " + id, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, opcs, opcs[2]);
+                switch (opc) {
+                    case 0:
+                        edit();
+                        break;
+                    case 1:
+                        remove();
+                        break;
+                }
+                return;
             }
         }
 
@@ -421,13 +441,6 @@ public class TesteSwinguera extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Investimento com ID " + valor + " não encontrado.", "Aviso!", JOptionPane.WARNING_MESSAGE);
     
     }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void spinBuscarIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spinBuscarIDKeyReleased
-        /*DefaultTableModel model = (DefaultTableModel) table.getModel();
-        TableRowSorter<DefaultTableModel> obj = new TableRowSorter<>(model);
-        table.setRowSorter(obj);
-        obj.setRowFilter(RowFilter.regexFilter(spinBuscarID.getValue().toString()));*/
-    }//GEN-LAST:event_spinBuscarIDKeyReleased
 
     private void popAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popAdicionarActionPerformed
         add();
