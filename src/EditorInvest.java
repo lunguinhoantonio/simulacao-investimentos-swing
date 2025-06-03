@@ -33,11 +33,6 @@ public class EditorInvest extends javax.swing.JFrame {
     public int getTempo() {
         return (Integer) spinnerTempo1.getValue();
     }
-
-    public void preencherCampos(String valor, int tempo) {
-        txtValor.setText(valor);
-        spinnerTempo1.setValue(tempo);
-    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -63,7 +58,7 @@ public class EditorInvest extends javax.swing.JFrame {
 
         lblTempo.setText("Tempo:");
 
-        spinnerTempo1.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
+        spinnerTempo1.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
         spinnerTempo1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_edit.png"))); // NOI18N
