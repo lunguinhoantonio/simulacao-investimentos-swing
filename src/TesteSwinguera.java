@@ -420,8 +420,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
                 msg += "Montante: R$ " + model.getValueAt(i, 3) + "\n";
                 msg += "Rendimento: " + model.getValueAt(i, 4) + "%\n";
                 msg += "Tempo: " + model.getValueAt(i, 5) + "\n";
-                System.out.println(model.getValueAt(i, 6));
-                msg += "Taxa: " + model.getValueAt(i, 6) + "%";
+                msg += "Taxa: " + model.getValueAt(i, 6) + (model.getValueAt(i, 6).toString().startsWith("I") ? "" : "%");
                 Object[] opcs = {"Editar", "Remover", "Cancelar"};
                 // Mostra a mensagem
                 int opc = JOptionPane.showOptionDialog(null, msg, "Busca do ID " + id, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, opcs, opcs[2]);
