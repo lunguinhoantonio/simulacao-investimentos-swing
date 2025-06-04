@@ -63,6 +63,7 @@ public class EditorInvest extends javax.swing.JFrame {
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_edit.png"))); // NOI18N
         btnEdit.setText("Editar");
+        btnEdit.setToolTipText("Altera os valores da simulação com os valores preenchidos nessa janela");
         btnEdit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

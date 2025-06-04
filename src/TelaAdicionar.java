@@ -66,6 +66,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
 
         btnAddInv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table_add.png"))); // NOI18N
         btnAddInv.setText("Adicionar");
+        btnAddInv.setToolTipText("Adiciona a simulação na tabela");
         btnAddInv.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddInv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
