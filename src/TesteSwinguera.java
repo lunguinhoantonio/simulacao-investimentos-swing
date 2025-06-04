@@ -2,6 +2,8 @@ import java.awt.Toolkit;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.*;
+import java.awt.*;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -22,7 +24,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) table.getModel();
         table.setRowSorter(new TableRowSorter(modelo));
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -277,11 +279,11 @@ public class TesteSwinguera extends javax.swing.JFrame {
         for (int i = 0; i < quantColunas; i++) {
             dados[i] = table.getValueAt(selectedRowIndex, i);
         }
+        
         Object id = (Object) dados[0];
 
         int opcaoEsc = JOptionPane.showOptionDialog(null,
-            "Tem certeza que deseja editar?\nID: " + id + ", Tipo Investimento: " + dados[1] + ", Investimento inicial (R$): " + dados[2] + 
-            ", Resultado (R$): " + dados[3] + ", Rendimento (%): " + dados[4] + ", Tempo: " + dados[5] + ", Taxa (%): " + dados[6],
+            "Tem certeza que deseja editar?\n\"ID: " + id + "\"",
             "Confirmação de edição do ID " + id,
             JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE,
