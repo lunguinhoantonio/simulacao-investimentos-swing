@@ -207,7 +207,7 @@ public class TesteSwinguera extends javax.swing.JFrame {
 
         jLabel2.setText("Pesquisar por ID:");
 
-        spinBuscarID.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
+        spinBuscarID.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         spinBuscarID.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -218,8 +218,8 @@ public class TesteSwinguera extends javax.swing.JFrame {
                 .addGap(212, 212, 212)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(spinBuscarID, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(spinBuscarID, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBuscar)
                 .addContainerGap(435, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -396,13 +396,23 @@ public class TesteSwinguera extends javax.swing.JFrame {
         }
     }
     
-    private int descobrirIndexID(int valor) {
+    /*private int descobrirIndexID(int valor) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         int index = 0;
         for (int i = 0; i < model.getRowCount(); i++) {
             int idTabela = (int) model.getValueAt(i, 0);
             if (valor == idTabela) return index;
             index++;
+        }
+        return -1;
+    }*/
+    
+    private int descobrirIndexID(int valor) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            int idTabela = (int) model.getValueAt(i, 0);
+            if (valor == idTabela) return table.convertRowIndexToView(i);
         }
         return -1;
     }
